@@ -1,0 +1,70 @@
+\usepackage{graphicx}
+% \usepackage[draft]{graphicx}
+\graphicspath{ {fig/} }
+ \usepackage[export]{adjustbox}
+ 
+\usepackage{todonotes}
+\usepackage[inline]{enumitem}
+\usepackage{bm}
+
+\usepackage{sty/msoelch/mlmacros}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{calc}
+\usepackage{fontawesome}
+\usepackage{hyperref}
+
+%\usepackage[osf,sc]{mathpazo} % Palatino as the main font
+%\linespread{1.05}\selectfont % Palatino needs some extra spacing, here 5% extra
+% \usepackage[euler-digits]{eulervm} % nicer math font
+
+% \usepackage{floatrow}
+\usepackage[skip=5pt]{caption}
+\usepackage{subcaption}
+
+\usepackage[noabbrev]{cleveref}
+
+% section spacing
+\usepackage{titlesec}
+
+\titlespacing*{\section}
+{0pt}{.1\baselineskip}{.1\baselineskip}
+  
+% Decrease spacing between bib entries
+%\setlength{\bibsep}{0pt plus 0.3ex}
+
+\newcommand*{\B}[1]{\ifmmode\bm{#1}\else\textbf{#1}\fi}
+
+\variables{a,b,c,g,t,o,s,v,x,z}
+\variables{A,I}
+
+\variables[app]{\alpha}
+\variables[mean]{\mu}
+\variables[std]{\sigma}
+\variables[map]{\nu}
+\variables[dparam]{\psi}
+
+% Neil's comment function
+\newcommand{\nd}[1]{\textcolor{red}{[ND: #1]}}
+\newcommand{\ab}[1]{\textcolor{green}{[AB: #1]}}
+\newcommand{\ak}[1]{\textcolor{blue}{[AK: #1]}}
+
+\probdists{p,q}
+
+\DeclarePairedDelimiter{\fences}{(}{)}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+
+%\DeclareMathOperator{\MLP}{ \mathrm{MLP} \Fences }
+\newcommand{\MLP}[1]{ \mathrm{MLP} \fences{#1} }
+\newcommand{\LSTM}[1]{ \mathrm{LSTM} \fences{#1} }
+\newcommand{\flatten}[1]{ \mathrm{vec} \fences{#1} }
+
+\newcommand{\reg}[1]{ \ensuremath{R} \fences{#1} }
+
+\definecolor{darkgreen}{rgb}{0,.502,0}
+
+\newcommand{\sidecaption}[1]% #1 = label name
+{\raisebox{\abovecaptionskip}{\begin{subfigure}[t]{1.6em}
+  \caption[singlelinecheck=off]{}% do not center
+  \label{#1}
+\end{subfigure}}\ignorespaces}
