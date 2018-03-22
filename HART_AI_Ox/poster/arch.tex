@@ -1,0 +1,76 @@
+\mysection{Two-Stream Attentive Model}
+
+\vspace{.5\baselineskip}
+
+\begin{minipage}[c]{0.475\textwidth}
+    \centering
+    \begin{minipage}[c]{\textwidth}
+    \includegraphics[width=\textwidth]{arch.pdf}
+    \end{minipage}
+    \vspace{-1\baselineskip}
+    
+    \begin{minipage}[c]{0.5\textwidth}
+        \begin{description}[labelsep=1em, leftmargin=!,labelwidth=\widthof{\bfseries $\bmapt$}]
+            \item[$\bxt$] input image
+            \item[$\bgt$] attention glimpse
+            \item[$\bmapt$] appearance-based features
+            \item[$\bst$] object segmentation
+            \item[$\bvt$] masked features
+        \end{description}
+    \end{minipage}\hfill
+    \begin{minipage}[c]{0.5\textwidth}
+       \begin{description}[labelsep=1em, leftmargin=!,labelwidth=\widthof{\bfseries $\Delta \widehat{\bb}_t$}]
+            \item[$\B{h}_t$] hidden state
+            \item[$\bot$] LSTM output
+            \item[$\bapp_{t+1}$] appearance
+            \item[$\Delta \widehat{\bb}_t$] bounding-box update
+            \item[$\ba_{t+1}$] spatial attention
+        \end{description}
+    \end{minipage}
+\end{minipage}
+%\begin{description}%[labelsep=1em, leftmargin=!,labelwidth=\widthof{\bfseries $\Delta \widehat{\bb}_t$}]
+%\item[Dorsal Stream] Attention driven by appearance-based features in a top-down fashion.
+%\end{description}
+
+\iffalse
+\begin{minipage}{0.3\textwidth}
+   \vspace{1em}
+%   \caption*{\Large \B{Appearance attention architecture}:}
+%   \vspace{.5em}
+%   \begin{minipage}[c]{0.5\textwidth}
+%       \centering
+%       \includegraphics[width=\textwidth]{impl.pdf}
+%   \end{minipage}\hfill
+    \begin{minipage}{0.6\textwidth}
+%    \begin{description}[leftmargin=\parindent]
+%%        \item[V1] shared CNN
+%        \item[Dorsal Stream] Dynamic\\ Filter Network (DFN)\\ conditioned on appearance
+%%        \item[Ventral Stream] CNN
+%    \end{description}
+    \B{Dorsal Stream:} Attention driven by appearance-based features in a top-down fashion.
+    \end{minipage}
+\vspace{.5em}
+\end{minipage}
+\begin{minipage}{0.3\textwidth}
+    \centering
+       \begin{minipage}[c]{0.26\textwidth}
+        \B{V1:} Shared~CNN
+    \end{minipage}
+    \begin{minipage}[c]{0.71\textwidth}
+        \B{Ventral Stream:} CNN extracts visual features
+    \end{minipage}
+\end{minipage}
+\fi
+\vspace{\baselineskip}
+
+\B{V1:} Shared low-level convolutional neural network for feature extraction.
+\\
+\B{Dorsal Stream:} Attention driven by high-level appearance features in a \textit{top-down} fashion.
+\\
+\B{Ventral Stream:} Appearance features computed in a \textit{bottom-up} fashion.
+\iffalse
+\\
+\B{LSTM:} Long Short Term Memory.
+\\
+\B{MLP:} Multilayer Perceptron sub-network.
+\fi

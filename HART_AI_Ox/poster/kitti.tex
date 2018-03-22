@@ -1,0 +1,29 @@
+\mysection{Scaling to Real-World Data: KITTI [3]}
+
+\vspace{0.5\baselineskip}
+
+    \begin{minipage}[c]{0.45\textwidth}
+        \centering
+        % \todo[inline]{other results are on their way}
+        \includegraphics[width=\textwidth]{kitti_iou_fig}
+        
+        \hspace{-1.55em}
+        {\large
+        \begin{minipage}[c]{0.5\linewidth}
+            \centering
+            \begin{tabular}{c|c|c|c}
+                \multicolumn{4}{c}{Average IoU on KITTI over 60 time-steps}\\
+                Kahou \emph{et. al.} [1] & Spatial Att & App Att & \B{HART}\\
+                \midrule
+                0.14 & 0.60 & 0.78 & \B{0.81}
+            \end{tabular}
+        \caption*{\large Spatial Att - no appearance attention\\ App Att - no appearance attention loss}
+        \end{minipage}
+        }\hfill
+        \begin{minipage}[c]{0.425\linewidth}
+            \vspace{.3em}
+            IoU curves on KITTI over 60 time-steps; HART~(train) presents evaluation on the train set.
+        \end{minipage}
+    \end{minipage}
+   
+    \vspace{0.25em}

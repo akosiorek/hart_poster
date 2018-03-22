@@ -1,0 +1,425 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% From a template maintained at https://github.com/jamesrobertlloyd/cbl-tikz-poster
+%
+% Code near the top should be fairly standard and not need to be changed
+%  - except for the document class
+% Code lower down is more likely to be customised
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Document class
+%
+% Change this if you want a different size / orientation poster etc
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\documentclass[landscape,a0b,final,a4resizeable]{a0poster}
+\documentclass[portrait,a0b,final,a4resizeable]{a0poster}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% 'Basic' packages
+%
+% TODO - Almost certainly some are unnecessary - feel free to remove nonstandard
+% packages if you think it is a good idea not to always have them
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{commands.tex}
+
+\usepackage[margin={4mm,4mm}]{geometry}
+\usepackage{multicol}
+\usepackage{color}
+\usepackage{shadow}
+\usepackage{morefloats}
+\usepackage{cite}
+%\usepackage[pdftex]{graphicx}
+\usepackage{rotating}
+\usepackage{amsmath, amsthm, amssymb, bm}
+\usepackage{array}
+\usepackage{nth}
+\usepackage[square,numbers]{natbib}
+\usepackage{booktabs}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% TIKZ packages and common definitions
+%
+% Add extra things as per your tikz needs
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{../common/picins}
+\usepackage{tikz}
+\usepackage{tabularx}
+\usetikzlibrary{shapes.geometric,arrows,chains,arrows.meta,matrix,positioning,scopes,calc}
+\tikzstyle{mybox} = [draw=none, rectangle]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% myfig
+%
+% \myfig - replacement for \figure
+% necessary, since in multicol-environment 
+% \figure won't work        
+%                 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\myfig}[3][0]{
+\begin{center}
+  \vspace{1.5cm}
+  \includegraphics[width=#3\hsize,angle=#1]{#2}
+  \nobreak\medskip
+\end{center}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% mycaption                
+%
+% \mycaption - replacement for \caption
+% necessary, since in multicol-environment \figure and
+% therefore \caption won't work
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\newcounter{figure}
+\setcounter{figure}{1}
+\newcommand{\mycaption}[1]{
+  \vspace{0.5cm}
+  \begin{quote}
+    {{\sc Figure} \arabic{figure}: #1}
+  \end{quote}
+  \vspace{1cm}
+  \stepcounter{figure}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Some standard colours
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\definecolor{oriblue}{cmyk}{1., .8, 0., .6}
+\definecolor{oriblue}{RGB}{0, 33, 71}
+\definecolor{camlightblue}{rgb}{0.601 , 0.8, 1}
+\definecolor{camdarkblue}{rgb}{0, 0.203, 0.402}
+\definecolor{camred}{rgb}{1, 0.203, 0}
+\definecolor{camyellow}{rgb}{1, 0.8, 0}
+\definecolor{lightblue}{rgb}{0, 0, 0.80}
+\definecolor{white}{rgb}{1, 1, 1}
+\definecolor{whiteblue}{rgb}{0.80, 0.80, 1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Some look and feel definitions
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\columnsep}{0.03\textwidth}
+\setlength{\columnseprule}{0.0018\textwidth}
+\setlength{\parindent}{0.0cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% \ - replacement for \section*
+% 
+% Puts a pretty box around some text
+% TODO - any other thoughts for what this box should look like
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\tikzstyle{mysection} = [rectangle, 
+									draw=none, 
+									shade, 
+									outer color=oriblue,
+									inner color=oriblue,
+									text width=0.965\columnwidth,
+									text centered,
+									rounded corners=20pt,
+									minimum height=0.11\columnwidth]
+
+\newcommand{\mysection}[1]
+{
+\begin{center}
+  \begin{tikzpicture}
+    \node[mysection] {\textcolor{white}{\sffamily\bfseries\LARGE#1}};
+  \end{tikzpicture}
+\end{center}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Set the font
+%
+% TODO - Not sure what a canonical choice is - feel free to modify
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand{\familydefault}{cmss}
+\sffamily
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Poster environment
+%
+% Centres everything and can be used to define the width of the content
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newenvironment{poster}{
+  \begin{center}
+  \begin{minipage}[c]{0.96\textwidth}
+}{
+  \end{minipage} 
+  \end{center}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% This is probably a good place to put content specific packages and definitions
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newtheorem{thm}{Theorem}%[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+
+\newtheorem*{theorem*}{Theorem}
+
+\theoremstyle{definition}
+\newtheorem*{definition*}{Definition}
+\newtheorem{definition}[thm]{Definition}%[section]
+\newtheorem{conj}{Conjecture}[section]
+\newtheorem{exmp}{Example}[section]
+\newtheorem{rem}[thm]{Remark}
+
+\theoremstyle{remark}
+%\newtheorem{rem}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{case}{Case}
+
+\newcommand{\eqd}{\overset{\,_{\!d}}{=}}
+\newcommand{\defn}[1]{\emph{#1}}
+
+\newcommand{\Law}{\mathcal{L}}
+
+\def\given{\,|\,}
+
+\def\SGinf{\mathbb{S}_{\infty}}
+
+\newcommand{\NonNegInts}{\mathbb{Z}_+}
+\newcommand{\Nats}{\mathbb{N}}
+\newcommand{\Rationals}{\mathbb{Q}}
+\newcommand{\Reals}{\mathbb{R}}
+
+\newcommand{\as}{\textrm{a.s.}}
+
+\def\[#1\]{\begin{align}#1\end{align}}
+\newcommand{\defas}{:=}
+
+\newcommand{\Normal}{\mathcal{N}}
+\newcommand{\dist}{\ \sim\ }
+
+\newcommand{\kernel}{\kappa}
+\newcommand{\kernelmatrix}{K}
+\newcommand{\scalefactor}{s}
+\newcommand{\lengthscale}{\ell}
+\newcommand{\targets}{T}
+\newcommand{\noise}{\sigma_\targets}
+\newcommand{\pseudopoints}{\eta}
+\newcommand{\inputpoints}{\xi}
+\newcommand{\covhyppar}{\psi}
+\newcommand{\logistic}{\phi}
+
+\newcommand{\CompOrder}{\mathcal{O}}
+\def\graphspace{\mathbf{G}}
+\def\Uniform{\mbox{\rm Uniform}}
+\def\Bernoulli{\mbox{\rm Bernoulli}}
+\def\ie{i.e.,\ }
+\def\eg{e.g.,\ }
+\def\iid{i.i.d.\ }
+\def\simiid{\sim_{\mbox{\tiny iid}}}
+\def\simind{\sim_{\mbox{\tiny ind}}}
+\def\eqdist{\stackrel{\mbox{\tiny d}}{=}}
+\def\ahfunction{\theta}       
+\def\AHfunction{\Theta}           % A-H random function
+\def\AHvar{U}                     % A-H uniform variables
+\def\AHvaralt{V}                  % A-H uniform variables - for bipartite data
+\def\larray{W}                    % latent array sampled with A-H
+%\def\latentspace{\mathbf{W}}      % range of entries
+\def\latentspace{\mathcal{W}}      % range of entries
+\def\darray{X}                    % data array
+%\def\dataspace{\mathbf{X}}        % sample space
+\def\dataspace{\mathcal{X}}        % sample space
+\def\cfspace{\mathbf{C}}          % space of continuous functions
+%\def\GP{\mbox{\mathcal{GP}}}
+\def\GP{\mathcal{GP}}
+\def\likelihood{P}
+\def\CovData{C}
+\def\CovDataAlt{D}
+
+\def\newarrow{\mbox{\begin{tikzpicture}
+             \useasboundingbox{(-3pt,-4.5pt) rectangle (19pt,1pt)};
+             \draw[->] (0,-0.07)--(17pt,-0.07);\end{tikzpicture}}}
+         
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% The document environment starts here
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Begin the poster environment - centres things and potentially changes the width
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{poster}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Potentially add some space at the top of the poster
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\vspace{0\baselineskip}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Draw the header as a TIKZ picture
+%
+% Using TIKZ to allow for easy alignment
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{center}
+
+\begin{tabularx}{0.96\textwidth}{c X c X c}
+
+\begin{tikzpicture}
+% University logo
+\node [mybox] (box) at (0.2, 0) {
+	\includegraphics[width=0.2\textwidth]{../badges/a2i_logo.pdf}
+};
+\end{tikzpicture}
+&
+&
+\begin{tikzpicture}
+    % Title text
+    \node[inner sep=0,text width=0.5\textwidth,text centered,font=\Huge]
+%    \node[inner sep=0,
+%    text width=0.5\textwidth,
+%    text centered,
+%    font=\Huge,
+%    draw=none,
+%    shade,
+%    outer color=oriblue,
+%    inner color=oriblue] 
+    (Title) at (0,0) 
+    {
+      {\sffamily \Huge \textbf{Hierarchical \mbox{Attentive} Recurrent Tracking}}\\
+      {\huge\sffamily Adam R. Kosiorek, Alex Bewley, Ingmar Posner}\\
+      \vspace{-0.3\baselineskip}
+      {\large\sffamily Applied AI Lab, Department of Engineering Science, University of Oxford, UK}\\
+      \vspace{-0.3\baselineskip}
+      {\large \texttt{\{adamk, bewley, ingmar\}@robots.ox.ac.uk}}
+      \vspace{-0.5\baselineskip}
+    };
+    % Lab badge
+    %\node [mybox] (Lab Badge) at (-1.25, 0) {
+     %   \includegraphics[height=\badgeheight]{../badges/a2i_logo.pdf}
+    %};
+    % University logo
+    %\node [mybox] (box) at (0.75, 0) {
+     %   \includegraphics[width=0.2\textwidth]{../badges/oxford.pdf}
+    %};
+\end{tikzpicture}
+&
+&
+\begin{tikzpicture}
+% University logo
+\node [mybox] (box) at (0, 0) {
+	\includegraphics[width=0.2\textwidth]{../badges/oxford.pdf}
+};
+%\node at (+0.15, 0) {};    
+\end{tikzpicture}
+\\
+\end{tabularx}
+\end{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Spacing between title and main body
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\vspace{1\baselineskip}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Columns environment
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\hspace{40mm}
+
+\begin{multicols}{2}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Start of content
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Large
+
+%\input{poster/motivation.tex}
+\vspace{2\baselineskip}
+\input{poster/intro.tex}
+\vspace{1\baselineskip}
+\input{poster/attention.tex}
+
+\vspace{1\baselineskip}
+
+%\newpage
+
+\input{poster/arch.tex}
+%\input{poster/method.tex}
+
+%\vspace{0\baselineskip}
+
+
+\newpage
+
+
+\input{poster/att_loss.tex}
+
+
+%\input{poster/loss.tex}
+
+
+
+\input{poster/kth.tex}
+
+%\vspace{0\baselineskip}
+
+\input{poster/kitti.tex}
+
+%\input{poster/conclusion.tex}
+
+\vspace{-2mm}
+
+\input{poster/references.tex}
+%\input{poster/social.tex}
+
+\end{multicols}
+
+
+\end{poster}
+
+\end{document}
